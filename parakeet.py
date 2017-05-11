@@ -1,4 +1,4 @@
-import praw, re
+import praw, re, datetime
 
 reddit = praw.Reddit('bot1')
 subreddit = reddit.subreddit('mechmarket')
@@ -16,11 +16,12 @@ for submission in subreddit.stream.submissions():
 
     # shorten url
     url = f'reddit.com/{submission.id}'
+    time = datetime.datetime.fromtimestamp(submission.created)
 
     # find posts containing the item
     if item in items:
         print('===============================')
-        print(f'Found a submission!\nTitle: {submission.title}\nURL: {url}\n')
+        print(f'Found a submission!\nTitle: {submission.title}\nTime: {time}\nURL: {url}\n')
 
         prices = re.findall(r'\d+', submission.selftext)    # finds all numbers in the selftext
         print('Possible Price:')
