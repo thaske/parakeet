@@ -4,9 +4,9 @@ def main():
     reddit = praw.Reddit('bot1')
     subreddit = reddit.subreddit('mechmarket')
 
-    item = 'Alps'
-    low = 0
-    high = 200
+    item = 'HHKB'
+    low = 50
+    high = 250
 
     for submission in subreddit.stream.submissions():
         process_submission(submission, item, low, high)
@@ -29,7 +29,7 @@ def process_submission(submission, item, low, high):
         prices = re.findall(r'\d+(?<!%)', submission.selftext)    # finds all numbers in the selftext
         print('Possible Price:')
         for price in prices:
-            if int(price) > low and int(price) < high:        # only display prices that would be reasonable for the item
+            if int(price) > low and int(price) < high:        # only display prices that would be reasonable
                 print(f'${price}')
 
         print('===============================\n\n')
