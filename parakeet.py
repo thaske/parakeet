@@ -35,31 +35,23 @@ def process_submission(submission, item, low, high):
 
     if item in items:
         title = f'Found {item}'
+
+        prices = re.findall(r'\d+(?<!%)', submission.selftext) # finds all numbers in the selftext in order to guess price
+        price_list = []
+        for price in prices:
+            if int(price) > low and int(price) < high:         # only display prices that would be reasonable
+                price_list.append(price)
+        price_list = list(map(str, price_list))                # convert prices to strings for easier manipulation
+        price_list = ["$" + price for price in price_list]     # append $ to each price
+
         msg = f'<div>{items}</div>'
+        for price in price_list:
+            msg += f'<div>{price}</div>'
         url = f'reddit.com/{submission.id}'
         return [True, title, msg, url]
 
     else:
         return [False]
-
-    # find posts containing the item
-    '''
-    if item in items:
-
-        # log to console
-        print('===============================')
-        print(f'Found a submission!\nTitle: {submission.title}\nTime: {time}\nURL: {url}\n')
-
-        prices = re.findall(r'\d+(?<!%)', submission.selftext)    # finds all numbers in the selftext in order to guess price
-        print('Possible Price:')
-        for price in prices:
-            if int(price) > low and int(price) < high:        # only display prices that would be reasonable
-                print(f'${price}')
-
-        print('===============================\n\n')
-
-        # send notification
-    '''
 
 if __name__ == '__main__':
     main()
