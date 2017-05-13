@@ -22,8 +22,9 @@ def main():
                  title = l[1],
                  message =  l[2],
                  url = l[3],
+                 url_title = 'Open Reddit',
                  html = True,
-                 sound = None
+                 sound = 'cosmic'
              )
 
 
