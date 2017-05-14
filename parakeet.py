@@ -1,5 +1,8 @@
 from chump import Application
-import praw, re, datetime, configparser
+import praw
+import re
+import datetime
+import configparser
 
 def main():
     reddit = praw.Reddit('bot1')
@@ -41,7 +44,8 @@ def process_submission(submission, item, low, high):
         price_list = []
         for price in prices:
             if int(price) > low and int(price) < high:         # only display prices that would be reasonable
-                price_list.append(price)
+                price_list.append(int(price))                  # convert each price to an int to allow sorting
+        price_list.sort(reverse=True)
         price_list = list(map(str, price_list))                # convert prices to strings for easier manipulation
         price_list = ["$" + price for price in price_list]     # append $ to each price
 
